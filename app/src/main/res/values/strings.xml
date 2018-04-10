@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">PBNews</string>
+    <string name="app_name">PB新闻</string>
+
+    <string name="internet_error">网络异常,请检查网络设置</string>
+    <string name="exit_prompt">再按一次退出程序</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
