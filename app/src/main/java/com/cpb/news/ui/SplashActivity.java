@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.cpb.news.R;
+import com.gyf.barlibrary.BarHide;
+import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+
+        ImmersionBar.with(this)
+                .fullScreen(true)
+                .transparentBar()
+                .hideBar(BarHide.FLAG_HIDE_BAR)
+                .init();
+
         animateImage();
     }
 
@@ -49,5 +58,11 @@ public class SplashActivity extends AppCompatActivity {
                 SplashActivity.this.finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImmersionBar.with(this).destroy();
     }
 }

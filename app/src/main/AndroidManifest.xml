@@ -14,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -24,7 +23,7 @@
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home"
+            android:label="PB News"
             android:theme="@style/AppTheme">
         </activity>
     </application>

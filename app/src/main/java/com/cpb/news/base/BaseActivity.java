@@ -1,15 +1,8 @@
 package com.cpb.news.base;
 
-import android.annotation.TargetApi;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cpb.news.App;
@@ -18,7 +11,8 @@ import com.cpb.news.di.component.ActivityComponent;
 import com.cpb.news.di.component.DaggerActivityComponent;
 import com.cpb.news.di.module.ActivityModule;
 import com.cpb.news.util.NetWorkUtil;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.gyf.barlibrary.BarHide;
+import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.ButterKnife;
 
@@ -33,7 +27,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected P mPresenter;
     private ActivityComponent mActivityComponent;
 
-    protected Toolbar mToolbar;
+    protected ImmersionBar mImmersionBar;
 
     public abstract int getLayoutId();
 
@@ -49,18 +43,18 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             Toast.makeText(this, getString(R.string.internet_error),
                     Toast.LENGTH_SHORT).show();
         }
-        initSystemBarTint();
-        setStatusBarTranslucent();
+
+        initActivityComponent();
 
         setContentView(getLayoutId());
         ButterKnife.bind(this);
 
-        initInjector();
-        //initToolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
+        //初始化沉浸式
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
         }
+
+        initInjector();
 
         initViews();
         if (mPresenter != null) {
@@ -75,32 +69,30 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
                 .build();
     }
 
-    /**
-     * 设置状态栏颜色
-     */
-    protected void initSystemBarTint() {
-        // 设置状态栏全透明
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mImmersionBar.hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR).init();
     }
 
-    //colorPrimaryDark
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    protected void setStatusBarTranslucent() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.colorPrimary);
-        }
+    protected void initImmersionBar() {
+        //在BaseActivity里初始化
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar
+                .fullScreen(true)
+                .transparentBar()
+                .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+                .init();
+    }
+
+    /**
+     * 是否可以使用沉浸式
+     * Is immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    protected boolean isImmersionBarEnabled() {
+        return true;
     }
 
 
@@ -110,6 +102,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
         if (mPresenter != null) {
             mPresenter.onDestroy();
+        }
+
+        if (mImmersionBar != null) {
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态}
         }
     }
 }
