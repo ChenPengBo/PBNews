@@ -8,4 +8,15 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <!--navigation-->
+    <string name="nav_news">新闻</string>
+    <string name="nav_images">图片</string>
+    <string name="nav_videos">视频</string>
+    <string name="nav_favorites">收藏</string>
+    <string name="nav_tools">百宝箱</string>
+    <string name="nav_setting">设置</string>
+    <string name="nav_about_app">关于软件</string>
+    <string name="nav_more">更多</string>
+
+
 </resources>

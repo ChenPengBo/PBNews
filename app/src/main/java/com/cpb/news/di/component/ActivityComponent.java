@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cpb.news.di.module.ActivityModule;
 import com.cpb.news.di.scope.ContextLife;
 import com.cpb.news.di.scope.PerActivity;
+import com.cpb.news.ui.HomeActivity;
 
 import dagger.Component;
 
@@ -25,5 +26,7 @@ public interface ActivityComponent {
     Context getApplicationContext();
 
     Activity getActivity();
+
+    void inject(HomeActivity homeActivity);
 
 }

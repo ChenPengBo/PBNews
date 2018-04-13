@@ -23,8 +23,15 @@
         </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:label="PB News"
-            android:theme="@style/AppTheme">
+            android:label="PB News">
+        </activity>
+        <activity
+            android:name=".ui.SettingActivity"
+            android:label="设置">
+        </activity>
+        <activity
+            android:name=".ui.AboutAppActivity"
+            android:label="关于软件">
         </activity>
     </application>
 

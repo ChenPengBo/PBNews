@@ -6,6 +6,11 @@ import android.content.Context;
 import com.cpb.news.di.module.FragmentModule;
 import com.cpb.news.di.scope.ContextLife;
 import com.cpb.news.di.scope.PerFragment;
+import com.cpb.news.ui.FavoriteFragment;
+import com.cpb.news.ui.ImagesFragment;
+import com.cpb.news.ui.NewsFragment;
+import com.cpb.news.ui.ToolsFragment;
+import com.cpb.news.ui.VideosFragment;
 
 import dagger.Component;
 
@@ -25,5 +30,13 @@ public interface FragmentComponent {
 
     Activity getActivity();
 
+    void inject(NewsFragment newsFragment);
 
+    void inject(ImagesFragment imagesFragment);
+
+    void inject(VideosFragment videosFragment);
+
+    void inject(FavoriteFragment favoriteFragment);
+
+    void inject(ToolsFragment toolsFragment);
 }

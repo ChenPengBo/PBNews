@@ -22,10 +22,11 @@ import butterknife.ButterKnife;
  * 描述: Activity基类
  */
 
-public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity {
 
     protected P mPresenter;
-    private ActivityComponent mActivityComponent;
+
+    protected ActivityComponent mActivityComponent;
 
     protected ImmersionBar mImmersionBar;
 
